@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  backend:
+    image: foodie_backend:latest
+    container_name: django_backend
+    env_file:
+      - ./backend/.env.prod
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn foodie_haven.wsgi:application --bind 0.0.0.0:8000
+      "
+    volumes:
+      - media_volume:/app/media
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  celery:
+    image: foodie_backend:latest
+    container_name: celery_worker
+    command: celery -A foodie_haven worker -l info
+    env_file:
+      - ./backend/.env.prod
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_DATABASE: django_db
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: strong_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+
+  frontend:
+    build: ./frontend/foodie-frontend
+    container_name: angular_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mysql_data:
+  media_volume:

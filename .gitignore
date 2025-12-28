@@ -1,0 +1,24 @@
+# Env files
+.env
+.env.*
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.sqlite3
+
+# Node
+node_modules/
+dist/
+
+# Docker
+*.log
+
+# Media & static
+media/
+staticfiles/
+
+# Secrets
+*.pem
