@@ -1,0 +1,43 @@
+<div class="purchased-container">
+  <h2>🎉 Purchased Recipes</h2>
+
+  <div *ngIf="purchasedRecipes.length === 0">
+    <p>You haven’t purchased any recipes yet.</p>
+  </div>
+
+  <div class="purchased-grid">
+    <div *ngFor="let order of purchasedRecipes" class="purchased-card">
+
+      <img
+        *ngIf="order.recipe?.image"
+        [src]="order.recipe.image"
+        alt="{{ order.recipe.title }}"
+        class="purchased-image"
+      />
+
+      <div class="info">
+        <h3>{{ order.recipe.title }}</h3>
+        <p>Price: ₹{{ order.recipe.price }}</p>
+
+        <button (click)="toggleDetails(order.id); $event.stopPropagation()">
+          {{ showDetails[order.id] ? 'Hide' : 'Show' }} Details
+        </button>
+
+        <div class="details" [class.open]="showDetails[order.id]">
+          <p><strong>Description:</strong> {{ order.recipe.description }}</p>
+          <p><strong>Category:</strong> {{ order.recipe.category_name }}</p>
+          <p><strong>Preparation Time:</strong> {{ order.recipe.preparation_time }} mins</p>
+          <p><strong>Cooking Time:</strong> {{ order.recipe.cooking_time }} mins</p>
+          <p><strong>Rating:</strong> {{ order.recipe.rating }} / 5</p>
+
+          <ol>
+            <li *ngFor="let step of getProcessSteps(order.recipe.process)">
+              {{ step }}
+            </li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

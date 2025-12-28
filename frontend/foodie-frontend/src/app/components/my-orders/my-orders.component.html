@@ -1,0 +1,24 @@
+<div class="orders-container">
+  <h2>📦 My Purchased Recipes</h2>
+
+  <div *ngIf="purchasedRecipes.length === 0">
+    <p>No recipes purchased yet.</p>
+  </div>
+
+  <div *ngFor="let order of purchasedRecipes" class="order-item">
+    <img
+      *ngIf="order.recipe?.image"
+      [src]="order.recipe.image"
+      alt="{{ order.recipe.title }}"
+    />
+
+    <div>
+      <h3>{{ order.recipe.title }}</h3>
+      <p>Price: ₹{{ order.recipe.price }}</p>
+      <p>
+        <strong>Purchased on:</strong>
+        {{ order.created_at | date:'medium' }}
+      </p>
+    </div>
+  </div>
+</div>
