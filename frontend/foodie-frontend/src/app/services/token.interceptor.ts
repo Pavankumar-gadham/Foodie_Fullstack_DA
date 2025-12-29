@@ -22,11 +22,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
     const publicEndpoints = [
       `${environment.apiUrl}/register/`,
-      `${environment.apiUrl}/login/`
+      `${environment.apiUrl}/login/`,
+      `${environment.apiUrl}/recipes`,
+      `${environment.apiUrl}/categories`
     ];
 
-    const isPublic = publicEndpoints.some(url => request.url.startsWith(url));
-    console.log('Is public:', isPublic);
+    const isPublic = publicEndpoints.some(url =>
+        request.url.includes(url)
+      );
 
     if (token && !isPublic) {
       request = request.clone({
