@@ -20,6 +20,8 @@ services:
     depends_on:
       - db
       - redis
+    ports:
+      - "8000:8000"
     restart: always
 
 
@@ -50,15 +52,6 @@ services:
   redis:
     image: redis:7-alpine
     container_name: redis
-    restart: always
-
-  frontend:
-    build: ./frontend/foodie-frontend
-    container_name: angular_frontend
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
     restart: always
 
 volumes:
