@@ -27,6 +27,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
 
 # Pagination config
 class RecipePagination(LimitOffsetPagination):
