@@ -23,6 +23,9 @@ services:
     ports:
       - "8000:8000"
     restart: always
+    volumes:
+      - media_volume:/app/media
+      - ./media:/app/media
 
 
   celery:

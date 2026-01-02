@@ -91,13 +91,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 # ======================
 # STATIC & MEDIA
 # ======================
@@ -110,9 +103,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 # SECURITY
 # ======================
 if not DEBUG:
- SECURE_SSL_REDIRECT = True
- CSRF_COOKIE_SECURE = True
- SESSION_COOKIE_SECURE = True
+ SECURE_SSL_REDIRECT = False
+ CSRF_COOKIE_SECURE = False
+ SESSION_COOKIE_SECURE = False
 # ======================
 # CORS / CSRF
 # ======================
@@ -171,5 +164,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_BACKEND = "django-db"
+#CELERY_RESULT_BACKEND = "django-db"
 CELERY_TIMEZONE = "UTC"
