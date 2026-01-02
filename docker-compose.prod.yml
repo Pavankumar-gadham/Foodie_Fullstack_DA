@@ -17,16 +17,13 @@ services:
       "
     volumes:
       - media_volume:/app/media
+      - ./media:/app/media
     depends_on:
       - db
       - redis
     ports:
       - "8000:8000"
     restart: always
-    volumes:
-      - media_volume:/app/media
-      - ./media:/app/media
-
 
   celery:
     image: foodie_backend:latest
